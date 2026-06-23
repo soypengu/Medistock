@@ -27,18 +27,24 @@ GRANT ALL PRIVILEGES ON DATABASE medistock TO medistock;
 GRANT ALL ON SCHEMA public TO medistock;
 EOF
 
-# Clonar repo
+# Clonar repos separados
 cd /var/www
+
+# Backend
 git clone https://github.com/soypengu/Medistock.git
 cd Medistock
 
 # Compilar backend
-cd /var/www/Medistock/backend
 mvn clean package -DskipTests
 
 # Crear directorio para el servicio
 mkdir -p /opt/medistock
 cp target/medistock-1.0.0.jar /opt/medistock/medistock.jar
+
+# Frontend
+cd /var/www
+git clone https://github.com/soypengu/Medistock-Front.git frontend
+mv frontend Medistock/
 cat > /etc/systemd/system/medistock.service << EOF
 [Unit]
 Description=MediStock Backend Service
