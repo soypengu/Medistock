@@ -8,7 +8,6 @@ git pull origin main
 
 # 2. Recompilar backend
 echo "=== Compilando backend ==="
-cd /var/www/Medistock/backend
 mvn clean package -DskipTests
 
 # 3. Actualizar el JAR y reiniciar servicio
