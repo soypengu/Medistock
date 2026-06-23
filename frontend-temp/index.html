@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MediStock - Gestión de Medicamentos</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>MediStock</h1>
+            <p class="subtitle">Sistema de Gestión de Medicamentos</p>
+        </header>
+
+        <nav class="tab-nav">
+            <button class="tab-btn active" data-tab="medicines">Medicamentos</button>
+            <button class="tab-btn" data-tab="categories">Categorías</button>
+            <button class="tab-btn" data-tab="suppliers">Proveedores</button>
+            <button class="tab-btn" data-tab="users">Usuarios</button>
+            <button class="tab-btn" data-tab="entries">Entradas</button>
+            <button class="tab-btn" data-tab="exits">Salidas</button>
+        </nav>
+
+        <!-- Medicamentos Tab -->
+        <div id="medicines" class="tab-content active">
+            <div class="section-header">
+                <h2>Medicamentos</h2>
+                <button class="btn-primary" onclick="openMedicineModal()">Agregar Medicamento</button>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre</th>
+                        <th>Tipo</th>
+                        <th>Caducidad</th>
+                        <th>Stock</th>
+                        <th>Categoría</th>
+                        <th>Proveedor</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="medicinesTable"></tbody>
+            </table>
+        </div>
+
+        <!-- Categorías Tab -->
+        <div id="categories" class="tab-content">
+            <div class="section-header">
+                <h2>Categorías</h2>
+                <button class="btn-primary" onclick="openCategoryModal()">Agregar Categoría</button>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre</th>
+                        <th>Descripción</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="categoriesTable"></tbody>
+            </table>
+        </div>
+
+        <!-- Proveedores Tab -->
+        <div id="suppliers" class="tab-content">
+            <div class="section-header">
+                <h2>Proveedores</h2>
+                <button class="btn-primary" onclick="openSupplierModal()">Agregar Proveedor</button>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre</th>
+                        <th>Contacto</th>
+                        <th>Teléfono</th>
+                        <th>Email</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="suppliersTable"></tbody>
+            </table>
+        </div>
+
+        <!-- Usuarios Tab -->
+        <div id="users" class="tab-content">
+            <div class="section-header">
+                <h2>Usuarios</h2>
+                <button class="btn-primary" onclick="openUserModal()">Agregar Usuario</button>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre</th>
+                        <th>Usuario</th>
+                        <th>Rol</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="usersTable"></tbody>
+            </table>
+        </div>
+
+        <!-- Entradas Tab -->
+        <div id="entries" class="tab-content">
+            <div class="section-header">
+                <h2>Entradas de Inventario</h2>
+                <button class="btn-primary" onclick="openEntryModal()">Agregar Entrada</button>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Medicamento</th>
+                        <th>Cantidad</th>
+                        <th>Fecha</th>
+                        <th>Usuario</th>
+                    </tr>
+                </thead>
+                <tbody id="entriesTable"></tbody>
+            </table>
+        </div>
+
+        <!-- Salidas Tab -->
+        <div id="exits" class="tab-content">
+            <div class="section-header">
+                <h2>Salidas de Inventario</h2>
+                <button class="btn-primary" onclick="openExitModal()">Agregar Salida</button>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Medicamento</th>
+                        <th>Cantidad</th>
+                        <th>Fecha</th>
+                        <th>Usuario</th>
+                        <th>Motivo</th>
+                    </tr>
+                </thead>
+                <tbody id="exitsTable"></tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Modals -->
+    <!-- Medicine Modal -->
+    <div id="medicineModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('medicineModal')">&times;</span>
+            <h2 id="medicineModalTitle">Agregar Medicamento</h2>
+            <form id="medicineForm">
+                <input type="hidden" id="medicineId">
+                <label>Nombre:</label>
+                <input type="text" id="medicineName" required>
+                <label>Descripción:</label>
+                <input type="text" id="medicineDescription">
+                <label>Tipo:</label>
+                <input type="text" id="medicineType">
+                <label>Fecha de Caducidad:</label>
+                <input type="date" id="medicineExpiration" required>
+                <label>Categoría:</label>
+                <select id="medicineCategory" required></select>
+                <label>Proveedor:</label>
+                <select id="medicineSupplier" required></select>
+                <button type="submit" class="btn-primary">Guardar</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Category Modal -->
+    <div id="categoryModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('categoryModal')">&times;</span>
+            <h2 id="categoryModalTitle">Agregar Categoría</h2>
+            <form id="categoryForm">
+                <input type="hidden" id="categoryId">
+                <label>Nombre:</label>
+                <input type="text" id="categoryName" required>
+                <label>Descripción:</label>
+                <input type="text" id="categoryDescription">
+                <button type="submit" class="btn-primary">Guardar</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Supplier Modal -->
+    <div id="supplierModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('supplierModal')">&times;</span>
+            <h2 id="supplierModalTitle">Agregar Proveedor</h2>
+            <form id="supplierForm">
+                <input type="hidden" id="supplierId">
+                <label>Nombre:</label>
+                <input type="text" id="supplierName" required>
+                <label>Contacto:</label>
+                <input type="text" id="supplierContact">
+                <label>Teléfono:</label>
+                <input type="text" id="supplierPhone">
+                <label>Email:</label>
+                <input type="email" id="supplierEmail">
+                <label>Dirección:</label>
+                <input type="text" id="supplierAddress">
+                <button type="submit" class="btn-primary">Guardar</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- User Modal -->
+    <div id="userModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('userModal')">&times;</span>
+            <h2 id="userModalTitle">Agregar Usuario</h2>
+            <form id="userForm">
+                <input type="hidden" id="userId">
+                <label>Nombre:</label>
+                <input type="text" id="userName" required>
+                <label>Usuario:</label>
+                <input type="text" id="userUsername" required>
+                <label>Contraseña:</label>
+                <input type="password" id="userPassword" required>
+                <label>Rol:</label>
+                <input type="text" id="userRole">
+                <button type="submit" class="btn-primary">Guardar</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Entry Modal -->
+    <div id="entryModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('entryModal')">&times;</span>
+            <h2>Agregar Entrada</h2>
+            <form id="entryForm">
+                <label>Medicamento:</label>
+                <select id="entryMedicine" required></select>
+                <label>Cantidad:</label>
+                <input type="number" id="entryQuantity" required min="1">
+                <label>Usuario:</label>
+                <select id="entryUser" required></select>
+                <button type="submit" class="btn-primary">Guardar</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Exit Modal -->
+    <div id="exitModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('exitModal')">&times;</span>
+            <h2>Agregar Salida</h2>
+            <form id="exitForm">
+                <label>Medicamento:</label>
+                <select id="exitMedicine" required></select>
+                <label>Cantidad:</label>
+                <input type="number" id="exitQuantity" required min="1">
+                <label>Usuario:</label>
+                <select id="exitUser" required></select>
+                <label>Motivo:</label>
+                <input type="text" id="exitReason">
+                <button type="submit" class="btn-primary">Guardar</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
