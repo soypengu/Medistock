@@ -1,4 +1,4 @@
-const API_URL = 'http://194.163.180.138:8080/api';
+const API_URL = '/api';
 
 document.addEventListener('DOMContentLoaded', () => {
     initTabs();
