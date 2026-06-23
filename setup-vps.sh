@@ -32,7 +32,7 @@ cd /var/www
 
 # Backend
 git clone https://github.com/soypengu/Medistock.git
-cd Medistock
+cd Medistock/backend
 
 # Compilar backend
 mvn clean package -DskipTests

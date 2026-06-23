@@ -2,7 +2,7 @@
 
 echo "=== Actualizando MediStock ==="
 
-# 1. Navegar al directorio y traer cambios
+# 1. Actualizar backend
 cd /var/www/Medistock
 git pull origin main
 
@@ -16,7 +16,12 @@ echo "=== Actualizando servicio backend ==="
 cp target/medistock-1.0.0.jar /opt/medistock/medistock.jar
 systemctl restart medistock
 
-# 4. Verificar que el backend está corriendo
+# 4. Actualizar frontend
+echo "=== Actualizando frontend ==="
+cd /var/www/Medistock/frontend
+git pull origin main
+
+# 5. Verificar que el backend está corriendo
 echo "=== Verificando estado del backend ==="
 systemctl status medistock --no-pager | head -20
 
